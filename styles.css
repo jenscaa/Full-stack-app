@@ -1,0 +1,38 @@
+#container {
+    display: grid;
+    grid-template-rows: 1fr 0.5fr;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, 0.90);
+    border-color: white;
+    border-radius: 20px;
+    align-items: center;
+    place-items: center;
+    text-align: center;
+    padding: 30px;
+    max-width: 660px;
+}
+
+#calculator {
+    display: grid;
+    grid-template-rows: 0.3fr 1fr;
+    gap: 15px;
+}
+
+#button_field {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 3px;
+}
+
+#screen {
+    background: #777777;
+    border-radius: 5px;
+    min-height: 150px;
+}
+
+
+button {
+    grid-column: span 1;
+    height: 70px;
+    width: 160px
+}
