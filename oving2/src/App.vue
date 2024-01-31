@@ -1,7 +1,7 @@
-<script setup lang="ts">
-import Calculator from './components/Calculator.vue';
+<script setup lang="js">
+import Calculator from './components/Calculator.vue'
 </script>
 
 <template>
-  <Calculator></Calculator>    
+  <Calculator></Calculator>
 </template>
