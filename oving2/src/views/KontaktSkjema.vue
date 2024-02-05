@@ -1,6 +1,5 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <form id="container" @submit.prevent="onSubmit">
+    <form id="container" @submit="submit">
         <div></div>
         <div id="skjema">
             <div><baseInput 
@@ -24,7 +23,7 @@
                 v-model="message"
                 :error="messageError"/>
             </div>
-            <button id="submit">Submit</button>
+            <button id="submit" type="submit">Submit</button>
         </div>
         <div></div>
     </form>
@@ -70,13 +69,17 @@ export default {
         }
         }
 
-        useForm({
+        const {handleSubmit, errors} = useForm({
         validationSchema: validations
         })
 
         const { value: name, errorMessage: nameError } = useField('name')
         const { value: email, errorMessage: emailError } = useField('email')
         const { value: message, errorMessage: messageError } = useField('message')
+
+        const submit = handleSubmit(values => {
+            console.log('submit', values);
+        })
 
         return {
         onSubmit,
@@ -85,7 +88,8 @@ export default {
         email,
         emailError,
         message,
-        messageError
+        messageError,
+        submit
         }
     }
 }
