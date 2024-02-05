@@ -60,19 +60,26 @@ export default {
 
     equals() {
       try {
-        const correctAnswer = eval(this.screen.replace('ANS', this.ans))
-        this.expression = this.screen.replace('ANS', this.ans) + '=' + correctAnswer
-        this.screen = correctAnswer
-        this.ans = this.screen
-        this.listOfExpressions.push(this.expression)
-        this.equalPressed = true
+        const correctAnswer = eval(this.screen.replaceAll('ANS', this.ans))
+        if (correctAnswer == "Infinity" || correctAnswer == "NaN") {
+          this.screen = 'Error'
+        } else {
+          this.expression = this.screen.replaceAll('ANS', this.ans) + '=' + correctAnswer
+          this.screen = correctAnswer
+          this.ans = this.screen
+          this.listOfExpressions.push(this.expression)
+          this.equalPressed = true
+        }
       } catch (error) {
         this.screen = 'Error'
-      }
+      } 
     },
 
     del() {
       if (this.screen.length != 0) {
+        if (this.screen == "Error" || this.screen == "ANS") {
+          this.screen = ''
+        }
         this.screen = this.screen.substring(0, this.screen.length - 1)
       }
     },
@@ -139,11 +146,16 @@ button {
   grid-column: span 1;
   max-height: 60px;
   max-width: 140px;
+  cursor: pointer;
 }
 
 #content {
   margin-top: 50px;
   text-align: right;
   font-size: 30px;
+}
+
+#list {
+  margin: 10px;
 }
 </style>
