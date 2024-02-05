@@ -23,7 +23,13 @@
                 v-model="message"
                 :error="messageError"/>
             </div>
-            <button id="submit" type="submit">Submit</button>
+            <button 
+            id="submit" 
+            type="submit"
+            :disabled="hasErrors()"
+            :style="{ cursor: hasErrors() ? 'default' : 'pointer'}">
+            Submit
+            </button>
         </div>
         <div></div>
     </form>
@@ -42,31 +48,36 @@ export default {
         alert('Submitted')
         }
 
-        const validations = {
-        name: value => {
-            const requiredMessage = 'This field is required'
-            if (value === undefined || value === null) return requiredMessage
-            if (!String(value).length) return requiredMessage
-
-            return true
-        },
-        email: value => {
-            if (!value) return 'This field is required'
-
-            const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            if (!regex.test(String(value).toLowerCase())) {
-            return 'Please enter a valid email address'
-            }
-
-            return true
-        },
-        message: value => {
-            const requiredMessage = 'This field is required'
-            if (value === undefined || value === null) return requiredMessage
-            if (!String(value).length) return requiredMessage
-
-            return true
+        const hasErrors = () => {
+            return Object.values(errors.value).some((error) => error)
         }
+
+        const validations = {
+            name: value => {
+                const requiredMessage = 'This field is required'
+                if (value === undefined || value === null) return requiredMessage
+                if (!String(value).length) return requiredMessage
+
+                return true
+            },
+            email: value => {
+                if (!value) return 'This field is required'
+
+                const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                if (!regex.test(String(value).toLowerCase())) {
+                return 'Please enter a valid email address'
+                }
+
+                return true
+            },
+            message: value => {
+                const requiredMessage = 'This field is required'
+                if (value === undefined || value === null) return requiredMessage
+                if (!String(value).length) return requiredMessage
+
+                return true
+            }
+        
         }
 
         const {handleSubmit, errors} = useForm({
@@ -78,18 +89,21 @@ export default {
         const { value: message, errorMessage: messageError } = useField('message')
 
         const submit = handleSubmit(values => {
+            onSubmit()
             console.log('submit', values);
         })
 
         return {
-        onSubmit,
-        name,
-        nameError,
-        email,
-        emailError,
-        message,
-        messageError,
-        submit
+            onSubmit,
+            name,
+            nameError,
+            email,
+            emailError,
+            message,
+            messageError,
+            submit,
+            errors,
+            hasErrors
         }
     }
 }
@@ -98,7 +112,7 @@ export default {
 <style scoped>
 #container {
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1.4fr;
+    grid-template-columns: 1.1fr 1fr 1.1fr;
 }
 
 
@@ -124,6 +138,4 @@ div {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
-
 </style>
