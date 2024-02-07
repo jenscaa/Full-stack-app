@@ -3,6 +3,7 @@
     <div>
       <label v-if="label">{{ label }}</label>
     </div>
+
     <div >
       <input
       v-bind="$attrs"
@@ -11,21 +12,23 @@
       @input="$emit('update:modelValue', $event.target.value)"
       class="field"/>
     </div>
-    <BaseErrorMessage
-    v-if="error"
-    :id="`${uuid}-error`">
-    {{ error }}
-  </BaseErrorMessage>
+
+    <div>
+      <p
+      aria-live="assertive"
+      class="errorMessage"
+      v-if="error">
+      {{ error }}
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-import BaseErrorMessage from '../components/BaseErrorMessage.vue'
 import SetupFormComponent from '@/features/SetupFormComponent'
 import UniqueID from '@/features/UniqueID'
 
 export default {
-  
   props: {
     label: {
       type: String,
@@ -74,7 +77,7 @@ input {
   margin-bottom: 10px;
 }
 
-BaseErrorMessage {
+p {
   color: rgb(248, 0, 0);
 }
 

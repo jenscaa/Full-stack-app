@@ -38,14 +38,43 @@
 <script lang="js">
 import BaseInput from '../components/BaseInput.vue'
 import { useField, useForm } from 'vee-validate'
+import axios from 'axios'
 export default {
     components: {
         BaseInput
     },
 
+
     setup () {
         function onSubmit () {
-        alert('Submitted')
+            alert('Submitted')
+        }
+
+        function sendForm () {
+            const formData = {
+                nameInput: name.value,
+                emailInput: email.value,
+                messageInput: message.value
+            }
+
+            axios.post(
+                'https://my-json-server.typicode.com/jenscaa/fake-server/events',
+                formData
+            )
+            .then(function (response) {
+                console.log('Response', response);
+                axios.get('https://my-json-server.typicode.com/jenscaa/fake-server/events?id=1')
+                .then(response2 => {
+                    const status = response2.data[0].status;
+                    console.log('Status:', status);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            })
+            .catch(function (err) {
+                console.log('Error', err)
+            })
         }
 
         const hasErrors = () => {
@@ -91,6 +120,7 @@ export default {
         const submit = handleSubmit(values => {
             onSubmit()
             console.log('submit', values);
+            sendForm()
         })
 
         return {
@@ -103,7 +133,8 @@ export default {
             messageError,
             submit,
             errors,
-            hasErrors
+            hasErrors,
+            sendForm
         }
     }
 }
