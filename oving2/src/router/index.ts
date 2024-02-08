@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import calculator from '../components/Calculator.vue'
+import calculator from '../views/Calculator.vue'
 import kontaktskjema from '../views/KontaktSkjema.vue'
 
 const router = createRouter({

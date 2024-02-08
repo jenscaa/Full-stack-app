@@ -5,7 +5,14 @@
     </div>
 
     <div >
-      <input
+      <input v-if="label!='Melding'"
+      v-bind="$attrs"
+      :value="modelValue"
+      :placeholder="label"
+      @input="$emit('update:modelValue', $event.target.value)"
+      class="field"/>
+
+      <textarea v-else
       v-bind="$attrs"
       :value="modelValue"
       :placeholder="label"
@@ -57,13 +64,21 @@ export default {
 
 <style scoped>
 label {
-  margin-top: 25px;
-  margin-bottom: 10px;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
 
 input {
   width: 90%;
   min-height: 50px;
+  border-radius: 7px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+textarea {
+  width: 90%;
+  min-height: 100px;
   border-radius: 7px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -72,9 +87,9 @@ input {
 #container {
   display: grid;
   grid-template-rows: 0.5fr 1fr;
-  padding: 15px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding: 10px;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 p {

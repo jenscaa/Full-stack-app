@@ -31,113 +31,92 @@
             Submit
             </button>
         </div>
-        <div></div>
     </form>
 </template>
 
-<script lang="js">
+<script setup lang="js">
 import BaseInput from '../components/BaseInput.vue'
 import { useField, useForm } from 'vee-validate'
 import axios from 'axios'
-export default {
-    components: {
-        BaseInput
-    },
+import { formStore } from '@/stores/counter'
 
+const store = formStore()
 
-    setup () {
-        function onSubmit () {
-            alert('Submitted')
-        }
-
-        function sendForm () {
-            const formData = {
-                nameInput: name.value,
-                emailInput: email.value,
-                messageInput: message.value
-            }
-
-            axios.post(
-                'https://my-json-server.typicode.com/jenscaa/fake-server/events',
-                formData
-            )
-            .then(function (response) {
-                console.log('Response', response);
-                axios.get('https://my-json-server.typicode.com/jenscaa/fake-server/events?id=1')
-                .then(response2 => {
-                    const status = response2.data[0].status;
-                    console.log('Status:', status);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            })
-            .catch(function (err) {
-                console.log('Error', err)
-            })
-        }
-
-        const hasErrors = () => {
-            return Object.values(errors.value).some((error) => error)
-        }
-
-        const validations = {
-            name: value => {
-                const requiredMessage = 'This field is required'
-                if (value === undefined || value === null) return requiredMessage
-                if (!String(value).length) return requiredMessage
-
-                return true
-            },
-            email: value => {
-                if (!value) return 'This field is required'
-
-                const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                if (!regex.test(String(value).toLowerCase())) {
-                return 'Please enter a valid email address'
-                }
-
-                return true
-            },
-            message: value => {
-                const requiredMessage = 'This field is required'
-                if (value === undefined || value === null) return requiredMessage
-                if (!String(value).length) return requiredMessage
-
-                return true
-            }
-        
-        }
-
-        const {handleSubmit, errors} = useForm({
-        validationSchema: validations
-        })
-
-        const { value: name, errorMessage: nameError } = useField('name')
-        const { value: email, errorMessage: emailError } = useField('email')
-        const { value: message, errorMessage: messageError } = useField('message')
-
-        const submit = handleSubmit(values => {
-            onSubmit()
-            console.log('submit', values);
-            sendForm()
-        })
-
-        return {
-            onSubmit,
-            name,
-            nameError,
-            email,
-            emailError,
-            message,
-            messageError,
-            submit,
-            errors,
-            hasErrors,
-            sendForm
-        }
+async function sendForm () {
+    const formData = {
+        nameInput: name.value,
+        emailInput: email.value,
+        messageInput: message.value
     }
+
+    await axios.post(
+        'https://my-json-server.typicode.com/jenscaa/fake-server/events',
+        formData
+    )
+    .then(function (response) {
+        console.log('Response', response);
+        axios.get('https://my-json-server.typicode.com/jenscaa/fake-server/events?id=1')
+        .then(response2 => {
+            const status = response2.data[0].status;
+            alert('Status: ' + status);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    })
+    .catch(function (err) {
+        console.log('Error', err)
+    })
 }
+
+function hasErrors() {
+    return Object.values(errors.value).some((error) => error)
+}
+
+const validations = {
+    name: value => {
+        const requiredMessage = 'This field is required'
+        if (value === undefined || value === null) return requiredMessage
+        if (!String(value).length) return requiredMessage
+
+        return true
+    },
+    email: value => {
+        if (!value) return 'This field is required'
+
+        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if (!regex.test(String(value).toLowerCase())) {
+        return 'Please enter a valid email address'
+        }
+
+        return true
+    },
+    message: value => {
+        const requiredMessage = 'This field is required'
+        if (value === undefined || value === null) return requiredMessage
+        if (!String(value).length) return requiredMessage
+
+        return true
+    }
+
+}
+
+const {handleSubmit, errors} = useForm({
+validationSchema: validations
+})
+
+const { value: name, errorMessage: nameError } = useField('name')
+const { value: email, errorMessage: emailError } = useField('email')
+const { value: message, errorMessage: messageError } = useField('message')
+
+const submit = handleSubmit(values => {
+    store.name = name.value
+    store.email = email.value
+    store.message = message.value
+
+    console.log('submit', values);
+    sendForm()
+})
 </script>
 
 <style scoped>
@@ -166,7 +145,7 @@ export default {
 }
 
 div {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 7px;
+    margin-bottom: 7px;
 }
 </style>

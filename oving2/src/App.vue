@@ -1,6 +1,6 @@
 <script setup lang="js">
 import { RouterLink, RouterView, useRouter } from 'vue-router'
-import Calculator from './components/Calculator.vue' 
+import Calculator from './views/Calculator.vue' 
 import BaseInput from './components/BaseInput.vue'
 import kontaktskjema from './views/KontaktSkjema.vue'
 
