@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
 
 import { mount } from '@vue/test-utils'
-import HelloWorld from '../HelloWorld.vue'
+import Calculator from '../../views/Calculator.vue'
 
-describe('HelloWorld', () => {
+describe('Calculator', () => {
   it('renders properly', () => {
-    const wrapper = mount(HelloWorld, { props: { msg: 'Hello Vitest' } })
-    expect(wrapper.text()).toContain('Hello Vitest')
+    const wrapper = mount(Calculator)
+    expect(wrapper.html()).toMatchSnapshot()
   })
 })

@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Calculator > renders properly 1`] = `
+"<div data-v-e7869473="" id="container">
+  <div data-v-e7869473="" id="calculator">
+    <div data-v-e7869473="" id="screen">
+      <p data-v-e7869473="" id="content"></p>
+    </div>
+    <div data-v-e7869473="" id="button_field"><button data-v-e7869473="">C</button><button data-v-e7869473="">ANS</button><button data-v-e7869473="">DEL</button><button data-v-e7869473="">+</button><button data-v-e7869473="">1</button><button data-v-e7869473="">2</button><button data-v-e7869473="">3</button><button data-v-e7869473="">-</button><button data-v-e7869473="">4</button><button data-v-e7869473="">5</button><button data-v-e7869473="">6</button><button data-v-e7869473="">*</button><button data-v-e7869473="">7</button><button data-v-e7869473="">8</button><button data-v-e7869473="">9</button><button data-v-e7869473="">/</button><button data-v-e7869473="" disabled=""></button><button data-v-e7869473="">0</button><button data-v-e7869473="">.</button><button data-v-e7869473="">=</button></div>
+  </div>
+  <div data-v-e7869473="" id="logg">
+    <ul data-v-e7869473="" id="ulist">
+      <!--eslint-disable-next-line vue/require-v-for-key-->
+    </ul>
+  </div>
+</div>"
+`;
