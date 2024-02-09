@@ -6,26 +6,26 @@
         <p id="content">{{ screen }}</p>
       </div>
       <div id="button_field">
-        <button v-on:click="clear()">C</button>
-        <button v-on:click="keyStroke('ANS')">ANS</button>
-        <button v-on:click="del()">DEL</button>
-        <button v-on:click="keyStroke('+')">+</button>
-        <button v-on:click="keyStroke('1')">1</button>
-        <button v-on:click="keyStroke('2')">2</button>
-        <button v-on:click="keyStroke('3')">3</button>
-        <button v-on:click="keyStroke('-')">-</button>
-        <button v-on:click="keyStroke('4')">4</button>
-        <button v-on:click="keyStroke('5')">5</button>
-        <button v-on:click="keyStroke('6')">6</button>
-        <button v-on:click="keyStroke('*')">*</button>
-        <button v-on:click="keyStroke('7')">7</button>
-        <button v-on:click="keyStroke('8')">8</button>
-        <button v-on:click="keyStroke('9')">9</button>
-        <button v-on:click="keyStroke('/')">/</button>
+        <button v-on:click="clear()" id="buttonClear">C</button>
+        <button v-on:click="keyStroke('ANS')" id="buttonANS">ANS</button>
+        <button v-on:click="del()" id="buttonDEL">DEL</button>
+        <button v-on:click="keyStroke('+')" id="buttonPlus">+</button>
+        <button v-on:click="keyStroke('1')" id="button1">1</button>
+        <button v-on:click="keyStroke('2')" id="button2">2</button>
+        <button v-on:click="keyStroke('3')" id="button3">3</button>
+        <button v-on:click="keyStroke('-')" id="buttonMinus">-</button>
+        <button v-on:click="keyStroke('4')" id="button4">4</button>
+        <button v-on:click="keyStroke('5')" id="button5">5</button>
+        <button v-on:click="keyStroke('6')" id="button6">6</button>
+        <button v-on:click="keyStroke('*')" id="buttonMultiplicate">*</button>
+        <button v-on:click="keyStroke('7')" id="button7">7</button>
+        <button v-on:click="keyStroke('8')" id="button8">8</button>
+        <button v-on:click="keyStroke('9')" id="button9">9</button>
+        <button v-on:click="keyStroke('/')" id="buttonDivide">/</button>
         <button disabled></button>
-        <button v-on:click="keyStroke('0')">0</button>
-        <button v-on:click="keyStroke('.')">.</button>
-        <button v-on:click="equals()">=</button>
+        <button v-on:click="keyStroke('0')" id="button0">0</button>
+        <button v-on:click="keyStroke('.')" id="button.">.</button>
+        <button v-on:click="equals()" id="buttonEquals">=</button>
       </div>
     </div>
     <div id="logg">

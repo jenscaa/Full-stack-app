@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BaseInput > renders properly 1`] = `
+"<div data-v-82c69faf="" id="container">
+  <div data-v-82c69faf="">
+    <!--v-if-->
+  </div>
+  <div data-v-82c69faf=""><input data-v-82c69faf="" placeholder="" class="field"></div>
+  <div data-v-82c69faf="">
+    <!--v-if-->
+  </div>
+</div>"
+`;

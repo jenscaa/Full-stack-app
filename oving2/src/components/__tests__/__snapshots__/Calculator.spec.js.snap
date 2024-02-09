@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Calculator > renders properly 1`] = `
+"<div data-v-e7869473="" id="container">
+  <div data-v-e7869473="" id="calculator">
+    <div data-v-e7869473="" id="screen">
+      <p data-v-e7869473="" id="content"></p>
+    </div>
+    <div data-v-e7869473="" id="button_field"><button data-v-e7869473="" id="buttonClear">C</button><button data-v-e7869473="" id="buttonANS">ANS</button><button data-v-e7869473="" id="buttonDEL">DEL</button><button data-v-e7869473="" id="buttonPlus">+</button><button data-v-e7869473="" id="button1">1</button><button data-v-e7869473="" id="button2">2</button><button data-v-e7869473="" id="button3">3</button><button data-v-e7869473="" id="buttonMinus">-</button><button data-v-e7869473="" id="button4">4</button><button data-v-e7869473="" id="button5">5</button><button data-v-e7869473="" id="button6">6</button><button data-v-e7869473="" id="buttonMultiplicate">*</button><button data-v-e7869473="" id="button7">7</button><button data-v-e7869473="" id="button8">8</button><button data-v-e7869473="" id="button9">9</button><button data-v-e7869473="" id="buttonDivide">/</button><button data-v-e7869473="" disabled=""></button><button data-v-e7869473="" id="button0">0</button><button data-v-e7869473="" id="button.">.</button><button data-v-e7869473="" id="buttonEquals">=</button></div>
+  </div>
+  <div data-v-e7869473="" id="logg">
+    <ul data-v-e7869473="" id="ulist">
+      <!--eslint-disable-next-line vue/require-v-for-key-->
+    </ul>
+  </div>
+</div>"
+`;

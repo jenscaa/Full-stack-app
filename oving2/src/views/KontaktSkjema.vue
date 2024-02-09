@@ -26,7 +26,7 @@
             <button 
             id="submit" 
             type="submit"
-            :disabled="hasErrors()"
+            :disabled=hasErrors()
             :style="{ cursor: hasErrors() ? 'default' : 'pointer'}">
             Submit
             </button>
@@ -42,7 +42,7 @@ import { formStore } from '@/stores/counter'
 
 const store = formStore()
 
-async function sendForm () {
+async function sendForm() {
     const formData = {
         nameInput: name.value,
         emailInput: email.value,
@@ -70,7 +70,7 @@ async function sendForm () {
 }
 
 function hasErrors() {
-    return Object.values(errors.value).some((error) => error)
+    return Object.values(errors.value).some((error) => error);
 }
 
 const validations = {
@@ -101,7 +101,7 @@ const validations = {
 
 }
 
-const {handleSubmit, errors} = useForm({
+const {handleSubmit, errors, meta} = useForm({
 validationSchema: validations
 })
 
