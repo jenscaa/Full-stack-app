@@ -38,6 +38,21 @@
 </template>
 
 <script lang="js">
+import axios from 'axios'
+
+function replaceDivision(expression) {
+    // Define a regular expression for "/n" where "n" is any number
+    var regex = /\/(\d+(\.\d+)?)/g;
+
+    // Replace all occurrences of the pattern
+    var modifiedExpression = expression.replace(regex, function(match, group1) {
+        var divisor = parseFloat(group1);
+        return '*' + divisor + '**-1';
+    });
+
+    return modifiedExpression;
+}
+
 export default {
   data() {
     return {
@@ -58,9 +73,15 @@ export default {
       this.screen += input
     },
 
-    equals() {
+    async equals() {
       try {
-        const correctAnswer = eval(this.screen.replaceAll('ANS', this.ans))
+
+        console.log(replaceDivision(this.screen));
+
+        const response = await axios.get(`http://localhost:8080/oving4/${(replaceDivision(this.screen))}`)
+            
+        console.log(response);
+        const correctAnswer = response.data;
         if (correctAnswer == "Infinity" || correctAnswer == "NaN") {
           this.screen = 'Error'
         } else {
@@ -72,6 +93,7 @@ export default {
         }
       } catch (error) {
         this.screen = 'Error'
+      
       } 
     },
 
