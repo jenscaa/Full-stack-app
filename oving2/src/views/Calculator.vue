@@ -1,6 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
+  
   <div id="container">
+    <h2>{{ this.activeUser }}</h2>
     <div id="calculator">
       <div id="screen">
         <p id="content">{{ screen }}</p>
@@ -34,11 +36,13 @@
         <li id="list" v-for="ex in listOfExpressions">{{ ex }}</li>
       </ul>
     </div>
+    <button @click="logOut">Log out</button>
   </div>
 </template>
 
 <script lang="js">
 import axios from 'axios'
+import { formStore } from '@/stores/counter';
 
 function replaceDivision(expression) {
     // Define a regular expression for "/n" where "n" is any number
@@ -60,11 +64,17 @@ export default {
       screen: '',
       ans: 0,
       listOfExpressions: [],
-      equalPressed: false
+      equalPressed: false,
+      activeUser: formStore().getActiveUser
     }
   },
 
+
   methods: {
+    navigateToHome() {
+      // Use this.$router.push to navigate
+      this.$router.push('/');
+    },
     keyStroke(input) {
       if (this.equalPressed == true) {
         this.screen = ''
@@ -76,11 +86,23 @@ export default {
     async equals() {
       try {
 
-        console.log(replaceDivision(this.screen));
-
-        const response = await axios.get(`http://localhost:8080/oving4/${(replaceDivision(this.screen))}`)
-            
-        console.log(response);
+        const response = await axios.post('http://localhost:8080/oving5del1/calculations', 
+          {username: this.activeUser, expression: replaceDivision(this.screen)}, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        })
+        const response2 = await axios.post('http://localhost:8080/oving5del1/calculations/min10calculations',
+          this.activeUser, {
+          headers: {
+            'Content-Type': 'text/plain',
+          }
+        }
+        )
+        console.log(response.data);
+        if (response.status==201) {
+          console.log(response.data);
+        }
         const correctAnswer = response.data;
         if (correctAnswer == "Infinity" || correctAnswer == "NaN") {
           this.screen = 'Error'
@@ -88,13 +110,40 @@ export default {
           this.expression = this.screen.replaceAll('ANS', this.ans) + '=' + correctAnswer
           this.screen = correctAnswer
           this.ans = this.screen
-          this.listOfExpressions.push(this.expression)
           this.equalPressed = true
+        }
+        if (response2.status == 200) {
+          const calculations = response2.data;
+          const temp = []
+          calculations.forEach(calculation => {
+            temp.push(calculation.answer)
+          })
+          this.listOfExpressions = temp
         }
       } catch (error) {
         this.screen = 'Error'
+        console.log("Some wierd error occured: ", error);
       
       } 
+    },
+
+    async logOut() {
+      try {
+        const response = await axios.post('http://localhost:8080/oving5del1/logOut', this.activeUser, {
+          headers: {
+            'Content-Type': 'text/plain',
+          }
+        })  
+        console.log(response);
+        if (response.status==202) {
+          alert("Logging off...")
+          this.$router.push('/');
+        } 
+        } catch (error) {
+          alert("An error occured when logging off")
+          console.error('Error while logging off:', error);
+          this.$router.push('/');
+      }
     },
 
     del() {
@@ -116,9 +165,9 @@ export default {
 <style scoped>
 #container {
   display: grid;
-  grid-template-rows: 1fr 0.5fr;
+  grid-template-rows: 0.01fr 1fr 0.8fr;
   gap: 10px;
-  padding: 30px;
+  padding: 10px;
   align-items: center;
   place-items: center;
   text-align: center;

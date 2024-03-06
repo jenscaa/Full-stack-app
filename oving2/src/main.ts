@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { formStore } from './stores/counter.js';
 
 import App from './App.vue'
 import router from './router'

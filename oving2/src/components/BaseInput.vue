@@ -1,39 +1,17 @@
 <template>
-  <div id="container">
-    <div>
-      <label v-if="label">{{ label }}</label>
-    </div>
-
-    <div >
-      <input v-if="label!='Melding'"
+  <div>
+    <label v-if="label">{{ label }}</label>
+    <input
+      v-model="inputValue"
       v-bind="$attrs"
-      :value="modelValue"
       :placeholder="label"
-      @input="$emit('update:modelValue', $event.target.value)"
-      class="field"/>
-
-      <textarea v-else
-      v-bind="$attrs"
-      :value="modelValue"
-      :placeholder="label"
-      @input="$emit('update:modelValue', $event.target.value)"
-      class="field"/>
-    </div>
-
-    <div>
-      <p
-      aria-live="assertive"
-      class="errorMessage"
-      v-if="error">
-      {{ error }}
-      </p>
-    </div>
+      class="field"
+    />
+    <p aria-live="assertive" class="errorMessage" v-if="error">{{ error }}</p>
   </div>
 </template>
 
 <script>
-import SetupFormComponent from '@/features/SetupFormComponent'
-import UniqueID from '@/features/UniqueID'
 
 export default {
   props: {
@@ -46,19 +24,16 @@ export default {
       default: ''
     },
     modelValue: {
-      type: [String, Number],
+      type: String,
       default: ''
     }
   },
-  setup (props, context) {
-    const { updateValue } = SetupFormComponent(props, context)
-    const uuid = UniqueID().getID()
-
+  data() {
     return {
-      updateValue,
-      uuid
+      inputValue: ''
     }
   }
+
 }
 </script>
 

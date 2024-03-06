@@ -2,10 +2,20 @@ import { defineStore } from 'pinia'
 
 export const formStore = defineStore('counter', {
   state: () => ({
-    return: {
+    formData: {
       name: '',
       message: '',
-      email: ''
+      email: '',
+    },
+
+    activeUser: ''
+  }),
+  actions: {
+    setActiveUser(newValue) {
+      this.activeUser = newValue;
     }
-  })
+  },
+  getters: {
+    getActiveUser: (state) => state.activeUser
+  }
 })
