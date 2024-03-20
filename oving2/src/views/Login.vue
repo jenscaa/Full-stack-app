@@ -58,21 +58,25 @@ const password = ref('')
     router.push('/register');
   };
 
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }
 
   const logIn = async() => {
     try {
       const response = await axios.post(
-        'http://localhost:8080/oving5del1/login',
-        { username: username.value, password: password.value },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        })
+        'http://localhost:8080/token/login',
+        { username: username.value, password: password.value }, config)
         console.log(response);
-        if (response.status==202) {
+        if (response.status==201) {
             store.setActiveUser(username.value)
             console.log(store.activeUser);
+            const token = response.data
+            console.log(token);
+            store.setToken(token);
+
             router.push('/kalkulator');
         }
       }
@@ -80,8 +84,20 @@ const password = ref('')
         alert("User does not exist or is already active")
         console.error('Error while logging in:', error);
     }
+  }
 
-
+  const createToken =  async() => {
+    try {
+      const response = await axios.post('http://localhost:8080/token/login',
+        { username: username.value, password: password.value }, config)
+        const token = response.data
+        console.log(token);
+        store.setToken(token);
+    }
+    catch (error) {
+      console.error('Error when creating token', error)
+    }
+  
   }
 
 </script>

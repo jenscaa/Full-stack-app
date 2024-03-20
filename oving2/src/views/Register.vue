@@ -44,17 +44,19 @@
   const registerNewUser = async () => {
     try {
       const response = await axios.post(
-        'http://localhost:8080/oving5del1/users',
+        'http://localhost:8080/token/register',
         { username: username.value, password: password.value },
         {
           headers: {
             'Content-Type': 'application/json',
           }
         })
-        console.log(response);
+        const token = response.data;
+        console.log("Token: " + token);
         if (response.status == 201) {
-        alert("You are now registered")
-        store.setActiveUser(username.value)
+        alert("You are now registered");
+        store.setActiveUser(username.value);
+        store.setToken(token);
         router.push('/kalkulator');
         }
         else {

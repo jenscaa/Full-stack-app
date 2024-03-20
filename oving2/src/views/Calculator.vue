@@ -65,11 +65,10 @@ export default {
       ans: 0,
       listOfExpressions: [],
       equalPressed: false,
-      activeUser: formStore().getActiveUser
+      activeUser: formStore().getActiveUser,
+      token: formStore().getToken
     }
   },
-
-
   methods: {
     navigateToHome() {
       // Use this.$router.push to navigate
@@ -83,23 +82,28 @@ export default {
       this.screen += input
     },
 
+    
     async equals() {
       try {
-
-        const response = await axios.post('http://localhost:8080/oving5del1/calculations', 
-          {username: this.activeUser, expression: replaceDivision(this.screen)}, {
+        const config = {
           headers: {
             'Content-Type': 'application/json',
-          }
-        })
+            'Authorization' : 'Bearer ' + this.token
+          }          
+        }
+
+        const response = await axios.post('http://localhost:8080/oving5del1/calculations', 
+          {username: this.activeUser, expression: replaceDivision(this.screen)}, config)
+          
         const response2 = await axios.post('http://localhost:8080/oving5del1/calculations/min10calculations',
           this.activeUser, {
           headers: {
             'Content-Type': 'text/plain',
+            'Authorization' : 'Bearer ' + this.token
           }
         }
         )
-        console.log(response.data);
+      
         if (response.status==201) {
           console.log(response.data);
         }
@@ -132,16 +136,19 @@ export default {
         const response = await axios.post('http://localhost:8080/oving5del1/logOut', this.activeUser, {
           headers: {
             'Content-Type': 'text/plain',
+            'Authorization' : 'Bearer ' + this.token
           }
         })  
         console.log(response);
         if (response.status==202) {
           alert("Logging off...")
+          formStore().resetAll()
           this.$router.push('/');
         } 
         } catch (error) {
           alert("An error occured when logging off")
           console.error('Error while logging off:', error);
+          formStore().resetAll()
           this.$router.push('/');
       }
     },
