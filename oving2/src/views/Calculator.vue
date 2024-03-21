@@ -42,6 +42,7 @@
 
 <script lang="js">
 import axios from 'axios'
+import { useRouter } from 'vue-router';
 import { formStore } from '@/stores/counter';
 
 function replaceDivision(expression) {
@@ -58,6 +59,19 @@ function replaceDivision(expression) {
 }
 
 export default {
+
+  setup() {
+    const token = formStore().getToken;
+    const router = useRouter()
+
+    if (token == null) {
+      router.push('/')
+    }
+
+    
+
+  },
+
   data() {
     return {
       expression: '',
